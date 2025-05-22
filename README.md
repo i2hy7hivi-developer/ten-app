@@ -70,3 +70,10 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 3. Add the folder path inside the composer.json autoload attribute under "files" key.
 4. Run composer dump-autoload inside project directory
 5. Test you helper
+
+## Update "App\" namespace
+1. Replace all you project files with desired namespace
+    For example:
+        use App\Models\User; => use TenApp\Models\User;
+
+2. Run composer dump-autoload inside project directory

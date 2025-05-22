@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace TenApp\Http\Controllers;
 
 abstract class Controller
 {

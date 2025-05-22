@@ -8,6 +8,6 @@ Route::get('/', function () {
 
 Route::get('helper', function () {
     // Using the CommonHelper class
-    \App\Helpers\CommonHelper::pred('Hello, this is a test message.');
+    \TenApp\Helpers\CommonHelper::pred('Hello, this is a test message.');
     // return view('helper');
 });

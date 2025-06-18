@@ -8,40 +8,51 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="text" name="address">
-    <button type="button" onclick="hello();">Click me!</button>
+    <div id="address-container">
+        <input type="text" name="address" class="address">
+    </div>
+    <button type="button" onclick="addInputField();">Click me!</button>
 </body>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&region=us"></script>
 <script>
-    function initializeAutocomplete() {
-        var input = document.querySelector('input[name="address"]');
-        if (!input) return;
-        var autocomplete = new google.maps.places.Autocomplete(input, {
-            types: ['geocode'] // or just [] for all types
-        });
+    function initializeAutocompleteForInput(input) {
+    var autocomplete = new google.maps.places.Autocomplete(input[0], {
+        types: ['geocode']
+    });
+    autocomplete.addListener('place_changed', function() {
+        var place = autocomplete.getPlace();
+        // Optional: use place
+    });
+}
 
-        // Optional: Listen for place selection
-        autocomplete.addListener('place_changed', function() {
-            var place = autocomplete.getPlace();
-            // You can use place here if needed
-            // Example: console.log(place.formatted_address);
-        });
-    }
-
-    // Initialize autocomplete when Google Maps script is loaded
-    function gm_authFailure() {
-        alert('Google Maps authentication failed. Please check your API key.');
-    }
-
-    // Wait for the Google Maps API to load
-    function waitForGoogleMaps() {
-        if (typeof google !== 'undefined' && google.maps && google.maps.places) {
-            initializeAutocomplete();
-        } else {
-            setTimeout(waitForGoogleMaps, 100);
+function initializeAllAutocompletes() {
+    $('.address').each(function() {
+        // Check to avoid re-initializing
+        if (!$(this).data('autocomplete-initialized')) {
+            initializeAutocompleteForInput($(this));
+            $(this).data('autocomplete-initialized', true);
         }
+    });
+}
+
+function waitForGoogleMaps() {
+    if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+        initializeAllAutocompletes();
+    } else {
+        setTimeout(waitForGoogleMaps, 100);
     }
-    waitForGoogleMaps();
+}
+waitForGoogleMaps();
+
+function addInputField() {
+    var newInput = $('<input type="text" name="dynamic_input[]" class="address">');
+    $('#address-container').append(newInput);
+    // Initialize autocomplete for the new input
+    if (typeof google !== 'undefined' && google.maps && google.maps.places) {
+        initializeAutocompleteForInput(newInput);
+        newInput.data('autocomplete-initialized', true);
+    }
+}
 </script>
 </html>

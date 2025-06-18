@@ -11,3 +11,5 @@ Route::get('helper', function () {
     \TenApp\Helpers\CommonHelper::pred('Hello, this is a test message.');
     // return view('helper');
 });
+
+Route::view('google-maps', 'google-maps');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Billing\PaymentGateway;
+use App\Billing\PaymentGatewayContract;
 use App\Order\Detail as OrderDetail;
 use Illuminate\Http\Request;
 
@@ -10,10 +10,10 @@ class PayOrderController extends Controller
 {
     public function process(
         OrderDetail $orderDetail,
-        PaymentGateway $paymentGateway
+        PaymentGatewayContract $bankPaymentGateway
     )
     {
         $order = $orderDetail->get();
-        dd($paymentGateway->charge(504));
+        dd($bankPaymentGateway->charge(504));
     }
 }

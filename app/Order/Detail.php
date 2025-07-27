@@ -12,7 +12,7 @@ class Detail
 
     public function get(): array
     {
-        $this->bankPaymentGateway->setDiscount(11);
+        $this->bankPaymentGateway->setDiscount(2);
 
         return [
             'name' => 'Rhythm',

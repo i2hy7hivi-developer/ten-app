@@ -11,6 +11,8 @@ Route::get('facade', function () {
     Parcel::send('Book', 'Medium', 'First Facade', 'rhythm@itradicals.com');
 });
 
+Route::get('pages', [App\Http\Controllers\PageController::class, 'index']);
+
 Route::get('process', [App\Http\Controllers\PayOrderController::class, 'process']);
 
 Route::get('parcel', function() {
